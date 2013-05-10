@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:ignore="SmallSp" >
+
+    <!-- <DatePicker -->
+    <!-- android:id="@+id/datePicker1" -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="0dp" -->
+    <!-- android:layout_gravity="center_horizontal" -->
+    <!-- android:layout_weight="40" -->
+    <!-- android:calendarViewShown="false" /> -->
+
+    <CalendarView
+        android:id="@+id/calendar"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="40"
+        android:showWeekNumber="false" />
+
+    <Button
+        android:id="@+id/searchAttendanceByDate"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="10"
+        android:text="@string/search"
+        android:textAlignment="gravity" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="40" >
+
+        <TableLayout
+            android:id="@+id/tblRecord"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp" >
+
+<!--             <TableRow -->
+<!--                 android:id="@+id/trFirstHeader" -->
+<!--                 android:layout_width="fill_parent" -->
+<!--                 android:layout_marginBottom="2dp" -->
+<!--                 android:background="@color/nerubia_blue" > -->
+
+<!--                 <TextView -->
+<!--                     android:layout_width="0dp" -->
+<!--                     android:gravity="center" -->
+<!--                     android:layout_weight="32" -->
+<!--                     android:layout_margin="2dp" -->
+<!--                     android:text="@string/punch_in" -->
+<!--                     android:textColor="@color/white" -->
+<!--                     android:textSize="9sp" /> -->
+
+<!--                 <TextView -->
+<!--                     android:layout_width="0dp" -->
+<!--                     android:layout_weight="32" -->
+<!--                     android:gravity="center" -->
+<!--                      android:layout_margin="2dp" -->
+<!--                     android:text="@string/punch_out" -->
+<!--                     android:textColor="@color/white" -->
+<!--                     android:textSize="9sp" /> -->
+
+<!--                 <TextView -->
+<!--                     android:layout_width="0dp" -->
+<!--                     android:layout_weight="32" -->
+<!--                      android:layout_margin="2dp" -->
+<!--                     android:gravity="fill_vertical" -->
+<!--                     android:text="@string/duration" -->
+<!--                     android:textColor="@color/white" -->
+<!--                     android:textSize="9sp" /> -->
+<!--             </TableRow> -->
+
+<!--             <TableRow -->
+<!--                 android:id="@+id/trSecondHeader" -->
+<!--                 android:layout_width="fill_parent" -->
+<!--                 android:layout_marginBottom="2dp" -->
+<!--                 android:background="@color/nerubia_blue" > -->
+
+<!--                 <TextView -->
+<!--                      android:layout_width="0dp" -->
+<!--                     android:layout_weight="50" -->
+<!--                     android:gravity="center" -->
+<!--                     android:layout_margin="2dp" -->
+<!--                     android:text="@string/puch_in_note" -->
+<!--                     android:textColor="@color/white" -->
+<!--                     android:textSize="9sp" /> -->
+
+<!--                 <TextView -->
+<!--                      android:layout_width="0dp" -->
+<!--                     android:layout_weight="50" -->
+<!--                     android:gravity="center" -->
+<!--                     android:layout_margin="2dp" -->
+<!--                     android:text="@string/punch_out_note" -->
+<!--                     android:textColor="@color/white" -->
+<!--                     android:textSize="9sp" /> -->
+<!--             </TableRow> -->
+        </TableLayout>
+    </ScrollView>
+
+</LinearLayout>

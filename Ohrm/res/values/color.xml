@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="nerubia_blue">#421f65</color>
+    <color name="nerubia_gray">#555657</color>	 
+    <color name="gray">#ededed</color>	
+    <color name="white">#ffffff</color>	 
+    <color name="light_blue">#808080</color> 
+</resources>

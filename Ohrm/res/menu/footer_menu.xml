@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<group android:id="@+id/timeMenu" >
+    <item
+        android:id="@+id/changePassword"
+        android:icon="@xml/password_lock"
+        android:showAsAction="never|ifRoom"
+        android:title="@string/change_password"/>
+    <item
+        android:id="@+id/logOutMenu"
+        android:icon="@xml/logout_icon"
+        android:showAsAction="ifRoom"
+        android:title="@string/logout"/>
+    
+</group>    
+</menu>
