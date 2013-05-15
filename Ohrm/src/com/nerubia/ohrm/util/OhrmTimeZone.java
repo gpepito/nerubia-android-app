@@ -17,6 +17,7 @@ public class OhrmTimeZone {
 
 	private Date _date=null;		
 	private Date _time=null;
+	private Date strDate=null;
 	
 	private DateFormat currentTimeFormatter=new SimpleDateFormat("HH:mm");
 	private DateFormat serverformatter=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -30,17 +31,28 @@ public class OhrmTimeZone {
 	private String serverFormatTime="";
 	private Period timeDiff;
 	
+	public Date getDate(String date) {
+		
+		try {
+			this.strDate = userDateFormatter.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return this.strDate;
+	}
+
 	//return date in milliseconds
 	public Period getTimeDiff() {
 		return this.timeDiff;
 	}
-
+	
 	public void setTimeDiff(Date prev, Date current) {
 		DateTime mprev=new DateTime(prev.getTime());
 		DateTime mcurrent=new DateTime(current.getTime());
 		Period p=new Period(mprev, mcurrent);
 		this.timeDiff=p;
 	}
+	
 	public String getServerFormatTime() {
 		return serverFormatTime;
 	}

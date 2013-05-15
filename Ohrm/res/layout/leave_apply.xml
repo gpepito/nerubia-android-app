@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="UselessParent" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp" >
+
+                <TextView
+                    android:id="@+id/tvLeaveType"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/leave_type"
+                    android:textSize="12sp" />
+
+                <!-- <ListView -->
+                <!-- android:id="@+id/listLeaveType" -->
+                <!-- android:layout_width="150dp" -->
+                <!-- android:layout_height="wrap_content" -->
+                <!-- android:layout_alignLeft="@+id/editLeaveType" -->
+                <!-- android:layout_below="@+id/editLeaveType" -->
+                <!-- android:visibility="gone" > -->
+                <!-- </ListView> -->
+
+                <EditText
+                    android:id="@+id/editLeaveType"
+                    android:paddingLeft="2dp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/tvLeaveType"
+                    android:background="@xml/edittextborder"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:textSize="12sp" >
+                </EditText>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/tvLeaveBal"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/leave_balance"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/editLeaveBal"
+                    android:paddingLeft="2dp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/tvLeaveBal"
+                    android:background="@xml/edittextborder"
+                    android:inputType="text"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/tvFromDate"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/from_date"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/editFromDate"
+                    android:paddingLeft="2dp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/tvFromDate"
+                    android:background="@xml/edittextborder"
+                    android:inputType="date"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/tvToDate"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/to_date"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/editToDate"
+                    android:paddingLeft="2dp"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/tvToDate"
+                    android:background="@xml/edittextborder"
+                    android:inputType="date"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/relTimeDuration"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/time"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal" >
+
+                        <TextView
+                            android:id="@+id/tvFromTime"
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/from"
+                            android:textSize="12sp" />
+
+                        <EditText
+                            android:id="@+id/editFromTime"
+                            android:paddingLeft="2dp"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:background="@xml/edittextborder"
+                            android:inputType="time"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvToTime"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="@string/to"
+                            android:textSize="12sp" />
+
+                        <EditText
+                            android:id="@+id/editToTime"
+                            android:paddingLeft="2dp"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="15dp"
+                            android:background="@xml/edittextborder"
+                            android:inputType="time"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvDuration"
+                            android:layout_width="55dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/duration"
+                            android:textSize="12sp" />
+
+                        <EditText
+                            android:id="@+id/editDuration"
+                            android:paddingLeft="2dp"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:background="@xml/edittextborder"
+                            android:inputType="text"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" >
+
+                <TextView
+                    android:id="@+id/tvComment"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/comment"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/editComment"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/tvComment"
+                    android:background="@xml/edittextborder"
+                    android:gravity="start"
+                    android:inputType="textMultiLine"
+                    android:lines="7"
+                    android:maxLines="7"
+                    android:textIsSelectable="false"
+                    android:textSize="12sp" >
+                </EditText>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnApply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/apply"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -29,6 +29,14 @@
 	<string name="puch_in_note">Punch In Note</string>
 	<string name="punch_out">Punch Out</string>
 	<string name="punch_out_note">Punch Out Note</string>
-	<string name="duration">Duration(Hours)</string>
+	<string name="duration">Duration</string>
 	<string name="total">Total</string>
+	<string name="leave_type">Leave Type</string>
+	<string name="leave_balance">Leave Balance</string>
+	<string name="from_date">From Date</string>
+	<string name="to_date">To Date</string>
+	<string name="from">From</string>
+	<string name="to">To</string>
+	<string name="duration_hours">Duration Hours</string>
+	<string name="comment">Comment</string>
 </resources>

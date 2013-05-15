@@ -69,9 +69,6 @@ public class ServerTask extends AsyncTask<Object, Void, String> {
 				nameValuePairs.add(new BasicNameValuePair("user_name",params[1].toString()));
 				nameValuePairs.add(new BasicNameValuePair("password", enc.get_encrypt()));	
 				
-//				nameValuePairs.add(new BasicNameValuePair("user_name","gem"));
-//				 nameValuePairs.add(new BasicNameValuePair("password","9b5bd5c86c722ebf5f5426ca97684933"));
-				
 				// using httpGet
 				paramString = URLEncodedUtils.format(nameValuePairs,"utf-8");
 				url = LOGIN_URL + paramString;

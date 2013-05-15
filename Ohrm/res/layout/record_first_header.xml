@@ -33,7 +33,7 @@
         android:layout_margin="2dp"
         android:layout_weight="32"
         android:gravity="fill_vertical"
-        android:text="@string/duration"
+        android:text="@string/duration_hours"
         android:textColor="@color/white"
         android:textSize="9sp" />
 

@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         android:uiOptions="" >
         <activity
-            android:name="com.nerubia.ohrm.MainActivity"
+            android:name="com.nerubia.ohrm.leave.LeaveApply"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,5 +26,6 @@
         <activity android:name="com.nerubia.ohrm.Login"></activity>
          <activity android:name="com.nerubia.ohrm.time.AttendancePunchIn"></activity>
          <activity android:name="com.nerubia.ohrm.time.AttendanceRecord"></activity>
+<!--          <activity android:name="com.nerubia.ohrm.leave.LeaveApply"></activity> -->
     </application>
 </manifest>
