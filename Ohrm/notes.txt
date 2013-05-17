@@ -1,24 +1,12 @@
 flow
->apply
->>get
+>myleavelist
+>get
 
-2.5
->>>get all available sick leave types under ohrm_leave_type
->>>get employees entitlements emp_id and leave_id where deleted=0 
->>>compute balance
->>>compute duration currentbalance-(duration/8hours)
-
-5.0
-what to update
-http://gladys.nerubia.com:3000/leave/apply/update_leave_entitlement.json?emp_id=24&leave_id=1&days_used=2.0
-
-days_used is the total days used::: 
->>ohrm_leave_request
->>ohrm_leave_request_comment
->>ohrm_leave_entitlement
-
->>ohrm_leave_leave_entitlement>>>>gets updated only when approved my superuser or admin
->>ohrm_leave>>only gets updated or added when admin or superuser approves or reject application
+accessed tables:
+leave period
+>>set default from/to date to the current leave period
+leave status
+leave request get by emp id 
 
 
 
@@ -28,5 +16,4 @@ check or validate empty fields
 
 
 references for tabhost
-http://android.codeandmagic.org/2011/07/android-tabs-with-fragments/
 http://www.mkyong.com/android/android-tablayout-example/
