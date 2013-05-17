@@ -28,4 +28,5 @@ check or validate empty fields
 
 
 references for tabhost
+http://android.codeandmagic.org/2011/07/android-tabs-with-fragments/
 http://www.mkyong.com/android/android-tablayout-example/
