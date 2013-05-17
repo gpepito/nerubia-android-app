@@ -25,7 +25,6 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.app.ActionBar.Tab;
 import android.content.Context;
 import android.content.SharedPreferences;

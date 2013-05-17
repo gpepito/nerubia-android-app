@@ -4,17 +4,14 @@ import java.util.ArrayList;
 
 import com.nerubia.ohrm.R;
 import com.nerubia.ohrm.leave.LeaveApply;
-import com.nerubia.ohrm.leave.LeaveApply.LeaveApplyServerTask;
 
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseArray;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
