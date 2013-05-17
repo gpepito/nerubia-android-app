@@ -7,8 +7,10 @@ import com.nerubia.ohrm.leave.LeaveApply;
 import com.nerubia.ohrm.leave.LeaveApply.LeaveApplyServerTask;
 
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -19,17 +21,23 @@ import android.widget.EditText;
 
 public class PopUpDialogFragment extends DialogFragment {
 	private final int LEAVE_TYPE_DIALOG=1;
+	private final int LOADER_SPINNER=2;
 	private int type=0;
+	private ProgressDialog progressDialog;
 	private ArrayList<String> items=new ArrayList<String>();
 	private SparseArray<String> arr=new SparseArray<String>();
 	
 	@SuppressWarnings("unchecked")
 	public PopUpDialogFragment(Object...params) {
 		this.type=(Integer) params[0];
-		arr=(SparseArray<String>)params[1];
-		
-		for(int i=0;i<arr.size();i++){
-			items.add(arr.valueAt(i).toString());	
+		switch (type) {
+		case LEAVE_TYPE_DIALOG:
+			arr=(SparseArray<String>)params[1];
+			
+			for(int i=0;i<arr.size();i++){
+				items.add(arr.valueAt(i).toString());	
+			}			
+			break;
 		}
 	}
 
@@ -50,10 +58,19 @@ public class PopUpDialogFragment extends DialogFragment {
 				}
 			});
 			return builder.create();
+			case LOADER_SPINNER:	
+				progressDialog=new ProgressDialog(getActivity());
+				progressDialog
+				.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+				progressDialog.setMessage("processing...");
+				progressDialog.show();
+				return progressDialog;
 		}
 		return null;
 	}
-	
+	public void dismissProgressDialog(){
+		progressDialog.dismiss();
+	}
 	
 	
 }

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import com.nerubia.ohrm.Login;
 import com.nerubia.ohrm.R;
 import com.nerubia.ohrm.ServerTask;
+import com.nerubia.ohrm.fragments.PopUpDialogFragment;
 import com.nerubia.ohrm.util.OhrmTimeZone;
 
 import android.annotation.TargetApi;
@@ -50,15 +51,19 @@ public class AttendancePunchIn extends Activity{
 	private JSONObject _records;
 	private ServerTask servertask = new ServerTask();
 	private Boolean noRecords = false;
-	private ProgressDialog _pd=null;
+	private PopUpDialogFragment progressDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attendance_punch_in);
-		_pd = new ProgressDialog(AttendancePunchIn.this);
-		_pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		_pd.setMessage("processing...");
+		
+		Log.d("oncreate","its here");
+		progressDialog=new PopUpDialogFragment(2);
+//		progressDialog.show(getFragmentManager(), "progressDialog");
+//		_pd = new ProgressDialog(AttendancePunchIn.this);
+//		_pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//		_pd.setMessage("processing...");
 		
 		_editor = PreferenceManager.getDefaultSharedPreferences(
 				getApplicationContext()).edit();
@@ -112,18 +117,18 @@ public class AttendancePunchIn extends Activity{
 			public void onClick(View v) {
 				String userTime=_txtDate.getText().toString()+" "+_txtTime.getText().toString()+":00";
 				if (_btnTimeIn.getText().equals("IN")) {
-					_pd.show();
+					progressDialog.show(getFragmentManager(), "progressDialog");
 					_editor.putBoolean("PAUSE_TIMER",true).commit();
-					new ServerTask().execute(5,_prefs.getString("emp_id",null),_txtNote.getText().toString(),"8", userTime,"PUNCHED IN",_pd,getApplicationContext());
+					new ServerTask().execute(5,_prefs.getString("emp_id",null),_txtNote.getText().toString(),"8", userTime,"PUNCHED IN",progressDialog,getApplicationContext());
 					_lblPunchTime.setVisibility(View.VISIBLE);
 					_txtPunchTime.setVisibility(View.VISIBLE);
 					_lblPunchTime.setText("Punch Out");
 					_txtPunchTime.setText(userTime);
 					_btnTimeIn.setText("OUT");
 				} else {
-						_pd.show();
+					progressDialog.show(getFragmentManager(), "progressDialog");
 						_editor.putBoolean("PAUSE_TIMER",true).commit();
-						new ServerTask().execute(4,_prefs.getString("emp_id",null),userTime,_txtNote.getText().toString(),"PUNCHED OUT",_pd,getApplicationContext());
+						new ServerTask().execute(4,_prefs.getString("emp_id",null),userTime,_txtNote.getText().toString(),"PUNCHED OUT",progressDialog,getApplicationContext());
 						_lblPunchTime.setVisibility(View.INVISIBLE);
 						_txtPunchTime.setVisibility(View.INVISIBLE);
 						_lblPunchTime.setText("Punch In");
@@ -198,7 +203,6 @@ public class AttendancePunchIn extends Activity{
 	}
 	@Override
 	protected void onStop() {
-		_pd.dismiss();;
 		super.onStop();
 	}
 	@Override

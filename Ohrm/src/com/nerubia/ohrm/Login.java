@@ -3,6 +3,7 @@ package com.nerubia.ohrm;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.nerubia.ohrm.fragments.PopUpDialogFragment;
 import com.nerubia.ohrm.util.EmailValidator;
 
 import android.app.Activity;
@@ -19,7 +20,7 @@ public class Login extends Activity {
 	private EditText _username;
 	private EditText _password;
 	private Button _login;
-	private ProgressDialog _loginSpinner;
+	private PopUpDialogFragment progressDialog;
 	private EmailValidator _validator;
 
 	// private LoginInfo loginInfo=new LoginInfo();
@@ -28,9 +29,8 @@ public class Login extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		_validator = new EmailValidator();
-
-		
+		progressDialog=new PopUpDialogFragment(2);		
+		_validator = new EmailValidator();		
 
 		_username = (EditText) findViewById(R.id.username);
 		_password = (EditText) findViewById(R.id.password);
@@ -40,11 +40,7 @@ public class Login extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (validate()) {
-					_loginSpinner = new ProgressDialog(Login.this);
-					_loginSpinner
-							.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-					_loginSpinner.setMessage("Logging in...");
-					_loginSpinner.show();
+					progressDialog.show(getFragmentManager(), "progressDialog");
 					login();
 				} else {
 					Toast.makeText(getApplicationContext(), _validateErrors,
@@ -56,7 +52,7 @@ public class Login extends Activity {
 
 	private void login() {
 		new ServerTask().execute(1, _username.getText().toString(), _password
-				.getText().toString(), _loginSpinner, getApplicationContext());
+				.getText().toString(),progressDialog, getApplicationContext());
 //		finish();
 		// new LoginTask().execute(url.LOGIN, _username.getText().toString(),
 		// _password

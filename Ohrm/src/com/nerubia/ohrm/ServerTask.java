@@ -15,6 +15,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.nerubia.ohrm.fragments.PopUpDialogFragment;
 import com.nerubia.ohrm.time.AttendancePunchIn;
 import com.nerubia.ohrm.util.Encryption;
 import com.nerubia.ohrm.util.OhrmTimeZone;
@@ -40,7 +41,7 @@ public class ServerTask extends AsyncTask<Object, Void, String> {
 	private String result = "";
 	private String url = "";
 	private Context context = null;
-	private ProgressDialog pd = null;
+	private PopUpDialogFragment pd;
 	private int type=0;
 	private SharedPreferences.Editor _editor;
 	private String paramString="";
@@ -60,7 +61,7 @@ public class ServerTask extends AsyncTask<Object, Void, String> {
 
 		case 1:
 			nameValuePairs = new ArrayList<NameValuePair>();
-			pd = (ProgressDialog) params[3];
+			pd = (PopUpDialogFragment) params[3];
 			context = (Context) params[4];						
 			_editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 			
@@ -125,7 +126,7 @@ public class ServerTask extends AsyncTask<Object, Void, String> {
 		case 4:	
 			context=(Context)params[6];
 			_editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-			pd = (ProgressDialog) params[5];
+			pd = (PopUpDialogFragment) params[5];
 			nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("emp_id",params[1].toString()));
 			nameValuePairs.add(new BasicNameValuePair("punch_out_user_time",params[2].toString()));
@@ -148,7 +149,7 @@ public class ServerTask extends AsyncTask<Object, Void, String> {
 		case 5:
 			context=(Context)params[7];
 			_editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-			pd = (ProgressDialog) params[6];
+			pd = (PopUpDialogFragment) params[6];
 			nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("employee_id",params[1].toString()));
 			nameValuePairs.add(new BasicNameValuePair("punch_in_note",params[2].toString()));
@@ -182,7 +183,7 @@ public class ServerTask extends AsyncTask<Object, Void, String> {
 		super.onPostExecute(result);		
 		switch (type) {
 		case 1:
-			pd.dismiss();
+			pd.dismissProgressDialog();
 			if (!result.equals("null")) {
 					 _editor.putBoolean("LOGGED_IN", true).commit();
 					 _editor.putBoolean("PAUSE_TIMER", false).commit();
@@ -225,13 +226,13 @@ public class ServerTask extends AsyncTask<Object, Void, String> {
 			break;
 		case 4:
 			_editor.putBoolean("PAUSE_TIMER",false).commit();
-			pd.hide();
+			pd.dismissProgressDialog();
 			Log.d("onPostExecute","PUNCHED OUT");
 			this.cancel(true);
 			break;
 		case 5:
 			_editor.putBoolean("PAUSE_TIMER",false).commit();
-			pd.hide();
+			pd.dismissProgressDialog();
 			Log.d("onPostExecute","PUNCHED_IN");
 			this.cancel(true);
 			break;

@@ -2,7 +2,6 @@ package com.nerubia.ohrm.leave;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,9 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nerubia.ohrm.R;
+import com.nerubia.ohrm.R.id;
 import com.nerubia.ohrm.fragments.DateTimePickerDialogFragment;
 import com.nerubia.ohrm.fragments.PopUpDialogFragment;
-import com.nerubia.ohrm.util.OhrmTimeZone;
 import com.nerubia.ohrm.util.OhrmTimeZone;
 
 import android.app.ActionBar;
@@ -43,7 +42,7 @@ public class LeaveApply extends Activity {
 	private static final int UPDATE_LEAVE_ENTITLEMENT=3;
 	private static final String SEARCH_ALL_LEAVE_TYPES_URL="http://gladys.nerubia.com:3000/leave/apply/search_all.json";
 	private static final String SEARCH_BY_LEAVE_TYPE_URL="http://gladys.nerubia.com:3000/leave/apply/search_by_leave_type.json?";
-	private static final String UPDATE_LEAVE_ENTITLEMENT_URL="http://gladys.nerubia.com:3000/leave/apply/update_leave_entitlement.json?";	
+	private static final String UPDATE_LEAVE_ENTITLEMENT_URL="http://gladys.nerubia.com:3000/leave/apply/add.json?";	
 	
 	private EditText fromDate;
 	private EditText toDate;
@@ -52,13 +51,18 @@ public class LeaveApply extends Activity {
 	private EditText leaveType;
 	private EditText leaveBal;
 	private EditText duration;
+	private EditText comments;
 	private Button btnApply;	
 	private LinearLayout rel;
+	private PopUpDialogFragment progressDialog;
 	
 	private int empId=-1;
 	private int leaveId=-1;
 	private double totalDeduct=0.0;
 	private double daysUsed=0.0;
+	private String dateApplied="";
+	
+	
 	private SparseArray<String> saleaves=new SparseArray<String>();
 	private OhrmTimeZone otz=new OhrmTimeZone();
 	
@@ -74,6 +78,7 @@ public class LeaveApply extends Activity {
 	}
 
 	private void addAllListeners() {
+		comments=(EditText)findViewById(id.editComment);
 		duration=(EditText)findViewById(R.id.editDuration);
 		rel=(LinearLayout)findViewById(R.id.relTimeDuration);
 		
@@ -83,8 +88,8 @@ public class LeaveApply extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				PopUpDialogFragment dialog=new PopUpDialogFragment(1,saleaves);
-				dialog.show(getFragmentManager(), "LeaveType");
+				PopUpDialogFragment dialogFragment=new PopUpDialogFragment(1,saleaves);
+				dialogFragment.show(getFragmentManager(), "LeaveType");
 			}
 		});
 		
@@ -149,9 +154,12 @@ public class LeaveApply extends Activity {
 					}
 				}
 				Log.d("total used days:",String.valueOf(totalDeduct));
+				progressDialog=new PopUpDialogFragment(2);
+				progressDialog.show(getFragmentManager(), "progressDialog");
 				performAsyncTask(3);
 			}
 		});
+		
 	}
 
 	
@@ -247,9 +255,12 @@ public class LeaveApply extends Activity {
 					nameValuePairs.add(new BasicNameValuePair("emp_id",params[1].toString()));
 					nameValuePairs.add(new BasicNameValuePair("leave_id",params[2].toString()));
 					nameValuePairs.add(new BasicNameValuePair("days_used",params[3].toString()));
+					nameValuePairs.add(new BasicNameValuePair("from_date",params[4].toString()));
+					nameValuePairs.add(new BasicNameValuePair("comments",params[5].toString()));
 					
 					paramString = URLEncodedUtils.format(nameValuePairs,"utf-8");
 					url=UPDATE_LEAVE_ENTITLEMENT_URL+paramString;
+					
 					httpGet = new HttpGet(url);
 					response = httpClient.execute(httpGet);
 
@@ -263,6 +274,7 @@ public class LeaveApply extends Activity {
 				}
 				break;
 			}
+			Log.d("url",url);
 			return result;
 		}
 		@Override
@@ -299,6 +311,7 @@ public class LeaveApply extends Activity {
 				}
 				break;
 			case UPDATE_LEAVE_ENTITLEMENT:
+				progressDialog.dismissProgressDialog();
 				Log.d("result",result);
 				for(int i=0;i<saleaves.size();i++){
 					if(saleaves.valueAt(i).equals(leaveType.getText().toString().trim())){
@@ -323,7 +336,10 @@ public class LeaveApply extends Activity {
 			new LeaveApplyServerTask().execute(params[0],empId,leaveId);
 			break;
 		case UPDATE_LEAVE_ENTITLEMENT:
-			new LeaveApplyServerTask().execute(params[0],empId,leaveId,totalDeduct);
+			Log.d("date applied",fromDate.getText().toString().trim());
+			String[] splitDate=fromDate.getText().toString().trim().split("-");
+			dateApplied=splitDate[0]+"-"+splitDate[2]+"-"+splitDate[1];
+			new LeaveApplyServerTask().execute(params[0],empId,leaveId,totalDeduct,dateApplied,comments.getText().toString());
 		}
 	}
 	

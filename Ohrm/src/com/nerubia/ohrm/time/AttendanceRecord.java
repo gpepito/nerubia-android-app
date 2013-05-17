@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import com.nerubia.ohrm.R;
 import com.nerubia.ohrm.ServerTask;
+import com.nerubia.ohrm.fragments.PopUpDialogFragment;
 import com.nerubia.ohrm.util.OhrmTimeZone;
 
 import android.annotation.SuppressLint;
@@ -44,7 +45,7 @@ import android.widget.TableRow.LayoutParams;
 
 @SuppressLint("NewApi")
 public class AttendanceRecord extends Activity {
-	private SharedPreferences.Editor _editor;
+//	private SharedPreferences.Editor _editor;
 	private SharedPreferences _prefs;
 
 	private CalendarView calendar;
@@ -52,15 +53,18 @@ public class AttendanceRecord extends Activity {
 	private String date = "";
 	private String emp_id = "";
 	private TableLayout tableLayout;
-	private LayoutInflater inflater;
+	private LayoutInflater inflater;	
 	
+	private PopUpDialogFragment progressDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attendance_record);
-		_editor = PreferenceManager.getDefaultSharedPreferences(
-				getApplicationContext()).edit();
+		
+		progressDialog=new PopUpDialogFragment(2);
+//		_editor = PreferenceManager.getDefaultSharedPreferences(
+//				getApplicationContext()).edit();
 		_prefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -88,9 +92,10 @@ public class AttendanceRecord extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				progressDialog.show(getFragmentManager(), "progressDialog");
 				Log.d("id and date:::",emp_id+"  "+date);
 				tableLayout.removeAllViews();
-				new AttendanceRecordServerTask().execute(1,date, emp_id,getApplicationContext());
+				new AttendanceRecordServerTask().execute(1,date, emp_id,getApplicationContext(),progressDialog);
 			}
 		});
 
@@ -186,7 +191,7 @@ public class AttendanceRecord extends Activity {
 		
 		private String result = "";
 		private String url = "";
-		private ProgressDialog pd = null;
+		private PopUpDialogFragment pd = null;
 		private int type=0;
 		
 		private HttpClient httpClient = new DefaultHttpClient();
@@ -200,6 +205,7 @@ public class AttendanceRecord extends Activity {
 			switch (type) {
 
 			case 1:	
+				pd=(PopUpDialogFragment)params[4];
 				nameValuePairs = new ArrayList<NameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("date",params[1].toString()));
 				nameValuePairs.add(new BasicNameValuePair("employee_id",params[2].toString()));
@@ -235,6 +241,7 @@ public class AttendanceRecord extends Activity {
 			String currentDuration="0:0";
 			switch (type) {
 			case 1:			
+				pd.dismissProgressDialog();
 				try {
 					JSONArray jsonArray=new JSONArray(result);
 					JSONObject jsonObject=new JSONObject();
