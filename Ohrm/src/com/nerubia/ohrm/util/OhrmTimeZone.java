@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.Period;
 
 import android.annotation.SuppressLint;
@@ -30,7 +31,23 @@ public class OhrmTimeZone {
 	private String userPunchTime="";
 	private String serverFormatTime="";
 	private Period timeDiff;
-	
+	private Interval dateInterval;
+	public Interval getDateInterval() {
+		return dateInterval;
+	}
+
+	public void setDateInterval(String fromDate,String toDate) {
+		String[] from=fromDate.split("-");
+		String[] to=toDate.split("-");
+		this.dateInterval =new Interval(new DateTime(Integer.parseInt(from[0]),
+							Integer.parseInt(from[2]),
+							Integer.parseInt(from[1]), 0, 0, 0, 0),
+							
+							new DateTime(Integer.parseInt(to[0]),
+							Integer.parseInt(to[2]),
+							Integer.parseInt(to[1]), 0, 0, 0, 0));
+	}
+
 	public Date getDate(String date) {
 		
 		try {

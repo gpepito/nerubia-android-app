@@ -2,7 +2,7 @@ package com.nerubia.ohrm.fragments;
 
 import java.text.NumberFormat;
 import com.nerubia.ohrm.R;
-import com.nerubia.ohrm.util.OhrmTimeZone;
+//import com.nerubia.ohrm.util.OhrmTimeZone;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -21,7 +21,7 @@ public class DateTimePickerDialogFragment extends DialogFragment {
 	static final int DATE_DIALOG_ID = 2;
 	private int viewId;
 	private int id;
-	private OhrmTimeZone otz=new OhrmTimeZone();
+//	private OhrmTimeZone otz=new OhrmTimeZone();
 	
 	private NumberFormat nf = NumberFormat.getNumberInstance();
 	private OnDateSetListener dateListener = new OnDateSetListener() {
