@@ -39,4 +39,5 @@
 	<string name="to">To</string>
 	<string name="duration_hours">Duration Hours</string>
 	<string name="comment">Comment</string>
+	<string name="main">Main Menu</string>
 </resources>
