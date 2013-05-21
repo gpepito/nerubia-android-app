@@ -6,7 +6,9 @@ import java.util.TimerTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.nerubia.ohrm.ApplicationManager;
 import com.nerubia.ohrm.Login;
+import com.nerubia.ohrm.MainActivity;
 import com.nerubia.ohrm.R;
 import com.nerubia.ohrm.ServerTask;
 import com.nerubia.ohrm.fragments.PopUpDialogFragment;
@@ -24,6 +26,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,13 +60,10 @@ public class AttendancePunchIn extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attendance_punch_in);
+	
+		((Activity)(((ApplicationManager)getApplicationContext()).getContext())).finish();
 		
-		Log.d("oncreate","its here");
 		progressDialog=new PopUpDialogFragment(2);
-//		progressDialog.show(getFragmentManager(), "progressDialog");
-//		_pd = new ProgressDialog(AttendancePunchIn.this);
-//		_pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//		_pd.setMessage("processing...");
 		
 		_editor = PreferenceManager.getDefaultSharedPreferences(
 				getApplicationContext()).edit();
@@ -76,7 +77,6 @@ public class AttendancePunchIn extends Activity{
 			@Override
 			public void onClick(View v) {
 				_editor.putBoolean("LOGGED_IN", false).commit();
-//				_editor.putBoolean("PAUSE_TIMER", true).commit();
 				Intent intent = new Intent(AttendancePunchIn.this,
 						Login.class);
 				intent.putExtra("login", true);
@@ -202,11 +202,12 @@ public class AttendancePunchIn extends Activity{
 	}
 	@Override
 	protected void onStop() {
+		_editor.putBoolean("PAUSE_TIMER", true).commit();
+		servertask.cancel(true);
 		super.onStop();
 	}
 	@Override
 	protected void onDestroy() {
-//		_editor.putBoolean("LOGGED_IN", false).commit();
 		_editor.putBoolean("PAUSE_TIMER", true).commit();
 		servertask.cancel(true);
 		super.onDestroy();
@@ -246,4 +247,33 @@ public class AttendancePunchIn extends Activity{
 		actionBar.setSelectedNavigationItem(0);
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent=null;
+		switch (item.getItemId()) {
+		case R.id.main_menu:	
+			intent=new Intent(AttendancePunchIn.this,MainActivity.class);
+			startActivity(intent);
+			finish();
+			return super.onOptionsItemSelected(item);
+
+		case R.id.logout_menu:
+			_editor.putBoolean("LOGGED_IN", true).commit();
+			intent = new Intent(AttendancePunchIn.this,
+					Login.class);
+			intent.putExtra("login", true);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+			finish();
+			return true;
+		
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
 }

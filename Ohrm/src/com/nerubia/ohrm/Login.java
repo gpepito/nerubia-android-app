@@ -7,7 +7,6 @@ import com.nerubia.ohrm.fragments.PopUpDialogFragment;
 import com.nerubia.ohrm.util.EmailValidator;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,11 +51,7 @@ public class Login extends Activity {
 
 	private void login() {
 		new ServerTask().execute(1, _username.getText().toString(), _password
-				.getText().toString(),progressDialog, getApplicationContext());
-//		finish();
-		// new LoginTask().execute(url.LOGIN, _username.getText().toString(),
-		// _password
-		// .getText().toString());
+				.getText().toString(),progressDialog, Login.this);
 	}
 
 	// for parsing jsonString from server

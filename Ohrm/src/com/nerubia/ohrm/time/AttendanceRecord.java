@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.nerubia.ohrm.Login;
+import com.nerubia.ohrm.MainActivity;
 import com.nerubia.ohrm.R;
 import com.nerubia.ohrm.ServerTask;
 import com.nerubia.ohrm.fragments.PopUpDialogFragment;
@@ -27,12 +29,15 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -44,7 +49,7 @@ import android.widget.TableRow.LayoutParams;
 
 @SuppressLint("NewApi")
 public class AttendanceRecord extends Activity {
-//	private SharedPreferences.Editor _editor;
+	private SharedPreferences.Editor _editor;
 	private SharedPreferences _prefs;
 
 	private CalendarView calendar;
@@ -62,8 +67,8 @@ public class AttendanceRecord extends Activity {
 		setContentView(R.layout.attendance_record);
 		
 		progressDialog=new PopUpDialogFragment(2);
-//		_editor = PreferenceManager.getDefaultSharedPreferences(
-//				getApplicationContext()).edit();
+		_editor = PreferenceManager.getDefaultSharedPreferences(
+				getApplicationContext()).edit();
 		_prefs = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -283,4 +288,34 @@ public class AttendanceRecord extends Activity {
 			this.cancel(true);
 		}
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent=null;
+		switch (item.getItemId()) {
+		case R.id.main_menu:	
+			intent=new Intent(AttendanceRecord.this,MainActivity.class);
+			startActivity(intent);
+			finish();
+			return super.onOptionsItemSelected(item);
+
+		case R.id.logout_menu:
+			_editor.putBoolean("LOGGED_IN", true).commit();
+			intent = new Intent(AttendanceRecord.this,
+					Login.class);
+			intent.putExtra("login", true);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+			finish();
+			return true;
+		
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+		}
 }

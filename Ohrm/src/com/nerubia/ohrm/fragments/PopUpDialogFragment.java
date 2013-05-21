@@ -50,7 +50,8 @@ public class PopUpDialogFragment extends DialogFragment {
 				public void onClick(DialogInterface dialog, int pos) {
 					EditText text=(EditText)getActivity().findViewById(R.id.editLeaveType);
 					text.setText(arr.valueAt(pos));
-					((LeaveApply)getActivity()).performAsyncTask(2,arr.valueAt(pos));
+					((LeaveApply)getFragmentManager().findFragmentByTag("LEAVE_APPLY")).performAsyncTask(2,arr.valueAt(pos));
+//					((LeaveApply)getActivity()).performAsyncTask(2,arr.valueAt(pos));
 					
 				}
 			});

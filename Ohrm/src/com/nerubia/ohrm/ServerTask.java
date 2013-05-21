@@ -196,6 +196,7 @@ public class ServerTask extends AsyncTask<Object, Void, String> {
 							i.putExtra("emp_id",jsonObject.getString("emp_number"));
 							i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 							context.startActivity(i);
+							((Activity)context).finish();
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
@@ -207,9 +208,9 @@ public class ServerTask extends AsyncTask<Object, Void, String> {
 
 			Intent i = new Intent(context,AttendancePunchIn.class);
 			i.putExtra("ATTENDANCE_RECORDS",(result!="null"?result.replace("\"","\'"):result));
+			i.putExtra("CURRENT_CONTEXT",context.toString());
 			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			context.startActivity(i);
-			((Activity)context).finish();
 			break;
 		case 3:
 			OhrmTimeZone tz=new OhrmTimeZone();

@@ -22,20 +22,23 @@ import com.nerubia.ohrm.fragments.DateTimePickerDialogFragment;
 import com.nerubia.ohrm.fragments.PopUpDialogFragment;
 import com.nerubia.ohrm.util.OhrmTimeZone;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.app.ActionBar.Tab;
+import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-public class LeaveApply extends Activity {
+public class LeaveApply extends Fragment {
+//	private SharedPreferences.Editor _editor;
+	private SharedPreferences _prefs;
 
 	private static final int SEARCH_ALL_LEAVE_TYPES=1;
 	private static final int SEARCH_BY_LEAVE_TYPE=2;
@@ -61,29 +64,33 @@ public class LeaveApply extends Activity {
 	private double totalDeduct=0.0;
 	private double daysUsed=0.0;
 	private String dateApplied="";
-	
+	private View view;
 	
 	private SparseArray<String> saleaves=new SparseArray<String>();
 	private OhrmTimeZone otz=new OhrmTimeZone();
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.leave_apply);
-		createNavigationTabs();
-		//get empId after log in, for now im using static id for testing.
-		empId=24;
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		view=inflater.inflate(R.layout.leave_apply, container,false);
+//		_editor = PreferenceManager.getDefaultSharedPreferences(
+//				getActivity()).edit();
+		_prefs = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+
+		empId = Integer.parseInt(_prefs.getString("emp_id","1"));
+		Log.d("leave apply empid  ", String.valueOf(empId));
 		performAsyncTask(1);
-
+		return view;
 	}
-
+	
 	private void addAllListeners() {
-		comments=(EditText)findViewById(id.editComment);
-		duration=(EditText)findViewById(R.id.editDuration);
-		rel=(LinearLayout)findViewById(R.id.relTimeDuration);
+		comments=(EditText)view.findViewById(id.editComment);
+		duration=(EditText)view.findViewById(R.id.editDuration);
+		rel=(LinearLayout)view.findViewById(R.id.relTimeDuration);
 		
-		leaveBal=(EditText)findViewById(R.id.editLeaveBal);
-		leaveType=(EditText)findViewById(R.id.editLeaveType);
+		leaveBal=(EditText)view.findViewById(R.id.editLeaveBal);
+		leaveType=(EditText)view.findViewById(R.id.editLeaveType);
 		leaveType.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -93,7 +100,7 @@ public class LeaveApply extends Activity {
 			}
 		});
 		
-		fromDate = (EditText) findViewById(R.id.editFromDate);
+		fromDate = (EditText) view.findViewById(R.id.editFromDate);
 		fromDate.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -104,7 +111,7 @@ public class LeaveApply extends Activity {
 			}
 		});
 
-		toDate = (EditText) findViewById(R.id.editToDate);
+		toDate = (EditText) view.findViewById(R.id.editToDate);
 		toDate.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -115,7 +122,7 @@ public class LeaveApply extends Activity {
 			}
 		});
 
-		fromTime=(EditText)findViewById(R.id.editFromTime);
+		fromTime=(EditText)view.findViewById(R.id.editFromTime);
 		fromTime.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -126,7 +133,7 @@ public class LeaveApply extends Activity {
 			}
 		});
 		
-		toTime=(EditText)findViewById(R.id.editToTime);
+		toTime=(EditText)view.findViewById(R.id.editToTime);
 		toTime.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -137,7 +144,7 @@ public class LeaveApply extends Activity {
 			}
 		});
 		
-		btnApply=(Button)findViewById(R.id.btnApply);
+		btnApply=(Button)view.findViewById(R.id.btnApply);
 		btnApply.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -162,39 +169,6 @@ public class LeaveApply extends Activity {
 		
 	}
 
-	
-	private void createNavigationTabs() {
-		final ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-
-			@Override
-			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-
-			}
-
-			@Override
-			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-
-			}
-
-			@Override
-			public void onTabReselected(Tab tab, FragmentTransaction ft) {
-
-			}
-		};
-		actionBar.setTitle(R.string.leave);
-		actionBar.addTab(actionBar.newTab().setText(R.string.apply)
-				.setTabListener(tabListener));
-		actionBar.addTab(actionBar.newTab().setText(R.string.my_leave)
-				.setTabListener(tabListener));
-		actionBar.addTab(actionBar.newTab().setText(R.string.entitlements)
-				.setTabListener(tabListener));
-		actionBar.addTab(actionBar.newTab().setText(R.string.reports)
-				.setTabListener(tabListener));
-		actionBar.setSelectedNavigationItem(0);
-	}
-	
 	public class LeaveApplyServerTask extends AsyncTask<Object, Void, String>{
 		
 		private HttpClient httpClient = new DefaultHttpClient();
